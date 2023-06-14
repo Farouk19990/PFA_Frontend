@@ -34,7 +34,7 @@ class _FilterPageState extends State<FilterPage> {
   String minString = "";
 
   late RangeValues selectedRange;
-  List<int> selectedColorIndex = [];
+  List<String> selectedColorIndex = [];
   List<String> selectedTaille = [];
 
   @override
@@ -178,7 +178,7 @@ class _FilterPageState extends State<FilterPage> {
             var color =
                 articles.map((e) => e.couleur.name).toList().toSet().toList();
             MyStatic static = MyStatic();
-            List<Color> colors = static.convertStringToColor(color);
+            Map<String, Color> colors = static.convertStringToColor(color);
             List<String> tailles =
                 articles.map((e) => e.taille.name).toList().toSet().toList();
             return Container(
@@ -272,17 +272,19 @@ class _FilterPageState extends State<FilterPage> {
                           height: 50,
                           width: 350,
                           child: ListView.builder(
+                            
                               scrollDirection: Axis.horizontal,
                               itemCount: colors.length,
                               itemBuilder: (context, index) {
-                                int selected = 0;
+                                  String colorName = colors.keys.elementAt(index);
+                                  Color? colorValue = colors[colorName];
                                 return GestureDetector(
                                   onTap: () {
                                     setState(() {
-                                      if (selectedColorIndex.contains(index)) {
-                                        selectedColorIndex.remove(index);
+                                      if (selectedColorIndex.contains(colorName)) {
+                                        selectedColorIndex.remove(colorName);
                                       } else {
-                                        selectedColorIndex.add(index);
+                                        selectedColorIndex.add(colorName);
                                       }
                                     });
                                   },
@@ -292,9 +294,9 @@ class _FilterPageState extends State<FilterPage> {
                                       height: 35,
                                       decoration: BoxDecoration(
                                         shape: BoxShape.circle,
-                                        color: colors[index],
+                                        color: colorValue,
                                       ),
-                                      child: selectedColorIndex.contains(index)
+                                      child: selectedColorIndex.contains(colorName)
                                           ? Image.asset(
                                               'asset/check-mark.png',
                                               color: Colors.white,

@@ -9,7 +9,26 @@ class ArticleVM {
   ArticleVM({
     required this.articleRepository,
   });
-
+  Future<List<Article>> getArticlesByProductId(int id) async {
+    List<Article> articles = [];
+    articles = await articleRepository.getArticlesByProductId(id);
+    print(articles);
+    return articles;
+  }
+    Future<List<List<String>>> getArticlesColorsAndSizes(int id) async {
+    List<Article> articles = [];
+    List<String> colorsName = [];
+    List<String> sizesName = [];
+    List<List<String>> ColorsAndSize = [];
+    articles = await articleRepository.getArticlesByProductId(id);
+    
+    colorsName= articles.map((e) => e.couleur.name).toSet().toList();
+    
+    sizesName= articles.map((e) => e.taille.name).toSet().toList();
+    ColorsAndSize.add(colorsName);
+    ColorsAndSize.add(sizesName);
+    return ColorsAndSize;
+  }
   Future<List<Article>> getArticles() async {
     List<Article> articles = [];
     List<Article> list=[];

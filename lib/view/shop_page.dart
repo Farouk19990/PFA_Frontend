@@ -7,6 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:mall/model/sous_categorie.dart';
 import 'package:mall/view/filter_page.dart';
+import 'package:mall/view/product_page.dart';
 import 'package:mall/view/sous_categorie.dart';
 import 'package:mall/view/static/static.dart';
 
@@ -120,7 +121,6 @@ class _ShopPageState extends State<ShopPage> {
                             children: [
                               Expanded(
                                 child: Container(
-                                  alignment: Alignment.topLeft,
                                   height: 50,
                                   child: ListView.builder(
                                     scrollDirection: Axis.horizontal,
@@ -452,22 +452,41 @@ class _ShopPageState extends State<ShopPage> {
                                                   BorderRadius.circular(10),
                                             ),
                                             margin: EdgeInsets.all(5),
-                                            child: Row(
-                                              children: [
-                                                Icon(
-                                                  Icons.add_shopping_cart,
-                                                  color: Colors.white,
-                                                ),
-                                                Text(
-                                                  'Add to cart',
-                                                  style: GoogleFonts.caladea(
-                                                    fontSize: 15,
-                                                    fontWeight: FontWeight.w700,
-                                                    height: 1.15,
+                                            child: GestureDetector(
+                                              onTap: () {
+                                                String imglogoS =
+                                                    widget.imglogo.toString();
+                                                showModalBottomSheet(
+                                                    context: context,
+                                                    shape: RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius.vertical(
+                                                                top: Radius
+                                                                    .circular(
+                                                                        20))),
+                                                    builder: (context) =>
+                                                        ProductPage(
+                                                            id: sns[index].id,
+                                                            imglogo: imglogoS));
+                                              },
+                                              child: Row(
+                                                children: [
+                                                  Icon(
+                                                    Icons.add_shopping_cart,
                                                     color: Colors.white,
                                                   ),
-                                                ),
-                                              ],
+                                                  Text(
+                                                    'Add to cart',
+                                                    style: GoogleFonts.caladea(
+                                                      fontSize: 15,
+                                                      fontWeight:
+                                                          FontWeight.w700,
+                                                      height: 1.15,
+                                                      color: Colors.white,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
                                             )),
                                       )
                                     : Positioned(

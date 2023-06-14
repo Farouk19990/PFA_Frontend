@@ -15,7 +15,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         title: 'Flutter Demo',
-        theme: ThemeData(appBarTheme: AppBarTheme(elevation: 0,color: Colors.white)),
+        
+        theme: ThemeData(primarySwatch: Colors.deepOrange,appBarTheme: AppBarTheme(elevation: 0,color: Colors.white)),
         home: AnimatedSplashScreen(
           splash: Column(
             children: [
