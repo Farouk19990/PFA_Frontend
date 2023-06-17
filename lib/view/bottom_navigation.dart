@@ -1,12 +1,11 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:mall/view/bag_page.dart';
 import 'package:mall/view/home.dart';
 import 'package:mall/view/profile_page.dart';
 import 'package:mall/view/shop_page.dart';
+import 'package:mall/view/static/boutiqueStatic.dart';
 
 import 'favorite_page.dart';
 import 'main_page.dart';
@@ -15,7 +14,8 @@ class BottomNavigationB extends StatefulWidget {
   final int? id;
   final String? imglogo;
   final int? pageIndex;
-  const BottomNavigationB({super.key, this.id, this.imglogo, this.pageIndex});
+  final String? success;
+  const BottomNavigationB({super.key, this.id, this.imglogo, this.pageIndex,this.success});
 
   @override
   State<BottomNavigationB> createState() => _BottomNavigationBState();
@@ -24,7 +24,6 @@ class BottomNavigationB extends StatefulWidget {
 class _BottomNavigationBState extends State<BottomNavigationB> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     currentIndex = widget.pageIndex!;
   }
@@ -103,10 +102,18 @@ class _BottomNavigationBState extends State<BottomNavigationB> {
                   label: 'Favorites',
                 ),
                 BottomNavigationBarItem(
-                  icon: Image.asset("asset/bottomNavigationBar_Icons/user.png",
-                      height: 45,
-                      width: 45,
-                      color: currentIndex == 4 ? selected : Colors.black),
+                  icon: GestureDetector(
+                    onDoubleTap: () {
+                      setState(() {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => BottomNavigationB(id: BoutiqueStatic.id,imglogo: BoutiqueStatic.imglogo,pageIndex: 4)));
+                      });
+                    },
+                    child: Image.asset("asset/bottomNavigationBar_Icons/user.png",
+                        height: 45,
+                        width: 45,
+                        color: currentIndex == 4 ? selected : Colors.black),
+                  ),
                   label: 'Profile',
                 ),
               ]),

@@ -1,21 +1,19 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, unnecessary_new
 
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
-import 'package:mall/model/sous_categorie.dart';
+import 'package:mall/model/inBag.dart';
 import 'package:mall/view/filter_page.dart';
 import 'package:mall/view/product_page.dart';
-import 'package:mall/view/sous_categorie.dart';
+
 import 'package:mall/view/static/static.dart';
 
-import '../model/categorie.dart';
 import '../model/produits.dart';
 import '../repository/produit_repo.dart';
 import '../view_model/produit_view_model.dart';
-import 'categorie.dart';
 
 class ShopPage extends StatefulWidget {
   final int? id;
@@ -133,10 +131,9 @@ class _ShopPageState extends State<ShopPage> {
                                         decoration: BoxDecoration(
                                             boxShadow: [
                                               BoxShadow(
-                                                color: Colors.black38
-                                                    .withOpacity(0.5),
+                                                color: Colors.grey.shade400,
                                                 spreadRadius: 0,
-                                                blurRadius: 50,
+                                                blurRadius: 70,
                                                 offset: Offset(0, 3),
                                               ),
                                             ],
@@ -163,8 +160,7 @@ class _ShopPageState extends State<ShopPage> {
                                   decoration: BoxDecoration(
                                       boxShadow: [
                                         BoxShadow(
-                                          color:
-                                              Colors.black38.withOpacity(0.5),
+                                          color: Colors.grey.shade400,
                                           spreadRadius: 0,
                                           blurRadius: 50,
                                           offset: Offset(0, 3),
@@ -205,7 +201,7 @@ class _ShopPageState extends State<ShopPage> {
                                             child: Row(
                                           children: [
                                             Padding(
-                                              padding: const EdgeInsets.all(3),
+                                              padding: const EdgeInsets.all(6),
                                               child: Image.asset(
                                                   'asset/filter.png'),
                                             ),
@@ -215,7 +211,7 @@ class _ShopPageState extends State<ShopPage> {
                                             Text(
                                               'Filter',
                                               style: GoogleFonts.istokWeb(
-                                                  fontSize: 25),
+                                                  fontSize: 22),
                                             ),
                                           ],
                                         )),
@@ -230,91 +226,86 @@ class _ShopPageState extends State<ShopPage> {
                                                           top: Radius.circular(
                                                               20))),
                                               builder: (context) => Container(
-                                                  padding: EdgeInsets.all(20),
-                                                  // decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
-                                                  height: 160,
-                                                  child: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .center,
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    children: [
-                                                      Card(
-                                                        shape:
-                                                            RoundedRectangleBorder(
-                                                          side: BorderSide(
-                                                              color: Colors
-                                                                  .white70,
-                                                              width: 1),
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(20),
+                                                    margin: EdgeInsets.only(
+                                                        left: 20, right: 40),
+                                                    child: Column(
+                                                      mainAxisSize:
+                                                          MainAxisSize.min,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Text(
+                                                          'Sort by',
+                                                          style: GoogleFonts
+                                                              .caladea(
+                                                                  fontSize: 25,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold),
                                                         ),
-                                                        elevation: 10,
-                                                        child: GestureDetector(
-                                                          onTap: () {
-                                                            sns!.sort((a, b) =>
-                                                                a.prix
-                                                                    .compareTo(b
-                                                                        .prix));
-                                                            Navigator.pop(
-                                                                context);
-                                                          },
-                                                          child: Container(
-                                                            width: 300,
-                                                            height: 50,
-                                                            child: Center(
+                                                        SizedBox(
+                                                          height: 10,
+                                                        ),
+                                                        Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
+                                                          children: [
+                                                            Container(
                                                               child: Text(
-                                                                'Price:  Lowest to high',
-                                                                style: GoogleFonts.caladea(
-                                                                    fontSize:
-                                                                        25,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold),
+                                                                'Price: Highest to low',
+                                                                style:
+                                                                    GoogleFonts
+                                                                        .caladea(
+                                                                  fontSize: 25,
+                                                                ),
                                                               ),
                                                             ),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      Card(
-                                                        shape:
-                                                            RoundedRectangleBorder(
-                                                          side: BorderSide(
-                                                              color: Colors
-                                                                  .white70,
-                                                              width: 1),
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(20),
-                                                        ),
-                                                        elevation: 10,
-                                                        child: GestureDetector(
-                                                          onTap: () {
-                                                            Navigator.pop(
-                                                                context);
-                                                          },
-                                                          child: Container(
-                                                            width: 300,
-                                                            height: 50,
-                                                            child: Center(
-                                                              child: Text(
-                                                                'Price:  Highest to low',
-                                                                style: GoogleFonts.caladea(
-                                                                    fontSize:
-                                                                        25,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold),
+                                                            Container(
+                                                              child:
+                                                                  Image.asset(
+                                                                'asset/checkbox.png',
+                                                                width: 30,
+                                                                height: 30,
                                                               ),
                                                             ),
-                                                          ),
+                                                          ],
                                                         ),
-                                                      ),
-                                                    ],
-                                                  )));
+                                                        SizedBox(
+                                                          height: 20,
+                                                        ),
+                                                        Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
+                                                          children: [
+                                                            Container(
+                                                              child: Text(
+                                                                'Price: lowest to high',
+                                                                style:
+                                                                    GoogleFonts
+                                                                        .caladea(
+                                                                  fontSize: 25,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            Container(
+                                                              child:
+                                                                  Image.asset(
+                                                                'asset/!checkbox.png',
+                                                                width: 30,
+                                                                height: 30,
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                        SizedBox(
+                                                          height: 40,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ));
                                         },
                                         child: Container(
                                             child: Row(
@@ -370,10 +361,10 @@ class _ShopPageState extends State<ShopPage> {
                                 EdgeInsetsDirectional.only(top: 10, start: 10),
                             decoration: BoxDecoration(boxShadow: [
                               BoxShadow(
-                                  color: Colors.black38,
+                                  color: Colors.grey.shade300,
                                   spreadRadius: 0,
-                                  blurRadius: 70),
-                            ], borderRadius: BorderRadius.circular(50)),
+                                  blurRadius: 10),
+                            ], borderRadius: BorderRadius.circular(10)),
                             child: Stack(
                               children: [
                                 ClipRRect(
@@ -418,6 +409,7 @@ class _ShopPageState extends State<ShopPage> {
                                                     .contains(index)) {
                                                   selectedIndex.remove(index);
                                                 } else {
+                                                  
                                                   selectedIndex.add(index);
                                                 }
                                                 print(

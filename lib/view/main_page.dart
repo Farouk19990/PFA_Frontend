@@ -3,17 +3,16 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mall/model/produits.dart';
-import 'package:mall/view/sous_categorie.dart';
 import 'package:mall/view/static/static.dart';
 import '../repository/produit_repo.dart';
 import '../view_model/produit_view_model.dart';
 import 'categorie.dart';
+import 'static/boutiqueStatic.dart';
 
 class MainPage extends StatefulWidget {
   final int? id;
   final String? imglogo;
   const MainPage({super.key, this.id, this.imglogo});
-
   @override
   State<MainPage> createState() => _MainPageState();
 }
@@ -23,6 +22,13 @@ class _MainPageState extends State<MainPage> {
   String not_pressed = "heart_not_pressed";
   String pressed = "heart_when_pressed_1";
   List<int> selectedIndex = [];
+  @override
+  void initState() {
+    super.initState();
+    BoutiqueStatic.id = widget.id!;
+    BoutiqueStatic.imglogo = widget.imglogo!;
+  }
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -50,7 +56,7 @@ class _MainPageState extends State<MainPage> {
                                       backgroundColor: Colors.black,
                                       shape: StadiumBorder()),
                                   onPressed: () {
-                                    MyStatic.catOrsubCat="";
+                                    MyStatic.catOrsubCat = "";
                                     MyStatic.selectedNAMEsousCategorie.clear();
                                     Navigator.push(
                                         context,
@@ -103,10 +109,10 @@ class _MainPageState extends State<MainPage> {
                           margin: EdgeInsetsDirectional.only(start: 10),
                           decoration: BoxDecoration(boxShadow: [
                             BoxShadow(
-                                color: Colors.black38,
+                                color: Colors.grey.shade300,
                                 spreadRadius: 0,
-                                blurRadius: 70),
-                          ], borderRadius: BorderRadius.circular(50)),
+                                blurRadius: 10),
+                          ], borderRadius: BorderRadius.circular(5)),
                           child: Stack(
                             children: [
                               ClipRRect(

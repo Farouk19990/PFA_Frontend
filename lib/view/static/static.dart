@@ -3,12 +3,23 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 import '../../model/inBag.dart';
+import '../../model/shippingInfo.dart';
 
 class MyStatic {
   static List<String> selectedNAMEsousCategorie = [];
   static String selectedCategorie = "";
   static String catOrsubCat = "";
   static List<int> listOfProductID = [];
+  static String staticT = "";
+  static List<ShippingInfo> shippingInfo = [];
+  static int total = 0;
+
+  static String goingToTheShipping="";
+
+  static String userEmail = "";
+  static int userID = 0;
+  static String orderDisplay = "";
+
   Map<String, Color> convertStringToColor(List<String> string) {
     Map<String, Color> colorMap = {};
     for (var i in string) {
@@ -38,11 +49,18 @@ class MyStatic {
   }
 
   static List<InBag> inBagList = [];
-  void makeInBagInstance(String imgUrl, String productName, List<String> colors,
-      List<String> sizes,int price) {
-    for (var i = 0; i < colors.length && i < sizes.length; i++) {
-      InBag inBag = InBag(imgUrl, productName, colors[i], sizes[i],price,1);
-      inBagList.add(inBag);
+  static List<InBag> favoriteList = [];
+  void makeInBagInstance(int id, String imgUrl, String productName,
+      List<String> colors, List<String> sizes, int price) {
+    for (InBag i in inBagList) {
+      print("here");
+      if (id == i.id && sizes.first == i.size && colors.first == i.color) {
+        i.setQte(i.qte+1);
+        return;
+      }
     }
+    InBag inBag =
+        InBag(id, imgUrl, productName, colors.first, sizes.first, price, 1);
+    inBagList.add(inBag);
   }
 }

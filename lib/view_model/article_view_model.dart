@@ -15,37 +15,46 @@ class ArticleVM {
     print(articles);
     return articles;
   }
-    Future<List<List<String>>> getArticlesColorsAndSizes(int id) async {
+
+  Future<List<List<String>>> getArticlesColorsAndSizes(int id) async {
     List<Article> articles = [];
     List<String> colorsName = [];
     List<String> sizesName = [];
     List<List<String>> ColorsAndSize = [];
     articles = await articleRepository.getArticlesByProductId(id);
-    
-    colorsName= articles.map((e) => e.couleur.name).toSet().toList();
-    
-    sizesName= articles.map((e) => e.taille.name).toSet().toList();
+
+    colorsName = articles.map((e) => e.couleur.name).toSet().toList();
+
+    sizesName = articles.map((e) => e.taille.name).toSet().toList();
     ColorsAndSize.add(colorsName);
     ColorsAndSize.add(sizesName);
     return ColorsAndSize;
   }
+
   Future<List<Article>> getArticles() async {
     List<Article> articles = [];
-    List<Article> list=[];
+    List<Article> list = [];
     for (var i in MyStatic.listOfProductID) {
-      print('i $i');
       list = await articleRepository.getArticlesByProductId(i);
-      print(list.isEmpty);
       articles.addAll(list);
     }
-  print('articles :: $articles');
-    print(articles.map((e)=>e.produitA.prix).toList().toSet().toList());
+    print(articles.map((e) => e.produitA.prix).toList().toSet().toList());
     return articles;
   }
-    Future<List<int>> getPrices() async {
+
+  Future<List<int>> getPrices() async {
     List<Article> articles = await getArticles();
-    List<int> prices=articles.map((e)=>e.produitA.prix).toList().toSet().toList();
+    List<int> prices =
+        articles.map((e) => e.produitA.prix).toList().toSet().toList();
     prices.sort();
     return prices;
+  }
+
+  Future<Article> getArticlesIdByCouleurTaille(
+      int id, String size, String color) async {
+    Article article =
+        await articleRepository.getbyProduitbyTaillebyCouleur(id, size, color);
+        print('article ${article.id}');
+    return article;
   }
 }

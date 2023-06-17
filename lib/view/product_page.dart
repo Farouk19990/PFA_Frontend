@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mall/model/article.dart';
+import 'package:mall/view/static/boutiqueStatic.dart';
 import 'package:mall/view/static/static.dart';
 
 import '../repository/article_repo.dart';
@@ -23,8 +24,12 @@ class _ProductPageState extends State<ProductPage> {
   List<String> colorslist = [];
   List<String> sizelist = [];
   List<String> selectedTaille = [];
-
   List<String> selectedColor = [];
+  Future<Article> getArticle(int id, String size, String color) async {
+    return await articleRepository.getArticlesIdByCouleurTaille(
+        id, size, color);
+  }
+
   void getColorsAndSizes() async {
     colorsAndSize =
         await articleRepository.getArticlesColorsAndSizes(widget.id);
@@ -37,7 +42,6 @@ class _ProductPageState extends State<ProductPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getColorsAndSizes();
   }
@@ -100,11 +104,8 @@ class _ProductPageState extends State<ProductPage> {
                                                             12))),
                                         onPressed: () {
                                           setState(() {
-                                            if (selectedTaille.contains(item)) {
-                                              selectedTaille.remove(item);
-                                            } else {
-                                              selectedTaille.add(item);
-                                            }
+                                            selectedTaille.clear();
+                                            selectedTaille.add(item);
                                           });
                                         },
                                         child: Text(
@@ -143,11 +144,8 @@ class _ProductPageState extends State<ProductPage> {
                                   return GestureDetector(
                                     onTap: () {
                                       setState(() {
-                                        if (selectedColor.contains(colorName)) {
-                                          selectedColor.remove(colorName);
-                                        } else {
-                                          selectedColor.add(colorName);
-                                        }
+                                        selectedColor.clear();
+                                        selectedColor.add(colorName);
                                       });
                                     },
                                     child: Container(
@@ -169,14 +167,18 @@ class _ProductPageState extends State<ProductPage> {
                       ),
                       TextButton(
                         // buttonprimaryinactivesmalltcr (9:1332)
-                        onPressed: () {
+                        onPressed: () async {
+                          BoutiqueStatic.success = "";
+                          print('produit id ${produit!.first.produitA.id}');
+                          Article articleId=await getArticle(produit.first.produitA.id, selectedTaille.first, selectedColor.first);
                           static.makeInBagInstance(
-                              produit!.first.produitA.image,
+                              articleId.id,
+                              produit.first.produitA.image,
                               produit.first.produitA.name,
                               selectedColor,
                               selectedTaille,
                               produit.first.produitA.prix);
-                              Navigator.pop(context);
+                          Navigator.pop(context);
                         },
                         style: TextButton.styleFrom(
                           padding: EdgeInsets.zero,
