@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mall/model/article.dart';
@@ -25,7 +27,22 @@ class _ProductPageState extends State<ProductPage> {
   List<String> sizelist = [];
   List<String> selectedTaille = [];
   List<String> selectedColor = [];
-  Future<Article> getArticle(int id, String size, String color) async {
+  String show = "";
+  bool shouldShow = false;
+  time() {
+    if (show == "out of bounds") {
+      setState(() {
+        shouldShow = true;
+      });
+      Timer timer = Timer(Duration(seconds: 5), () {
+        setState(() {
+          shouldShow = false;
+        });
+      });
+    }
+  }
+
+  Future<int> getArticle(int id, String size, String color) async {
     return await articleRepository.getArticlesIdByCouleurTaille(
         id, size, color);
   }
@@ -73,7 +90,7 @@ class _ProductPageState extends State<ProductPage> {
                       Container(
                         width: double.infinity,
                         child: SizedBox(
-                            height: 50,
+                            height: 85,
                             width: 350,
                             child: Wrap(
                               children: [
@@ -153,32 +170,56 @@ class _ProductPageState extends State<ProductPage> {
                                         width: 45,
                                         height: 45,
                                         decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          color: colorValue,
-                                        ),
+                                            shape: BoxShape.circle,
+                                            color: colorValue,
+                                            border: Border.all(
+                                                color: Colors.black, width: 2)),
                                         child: selectedColor.contains(colorName)
                                             ? Image.asset(
                                                 'asset/check-mark.png',
-                                                color: Colors.white,
+                                                color: colorName != "blanc"
+                                                    ? Colors.white
+                                                    : Colors.black,
                                               )
                                             : null),
                                   );
                                 })),
                       ),
+                      Center(
+                        child: Container(
+                            child: shouldShow
+                                ? Text("Sorry,This article is out of stock.",
+                                    style: GoogleFonts.istokWeb(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.red))
+                                : Container()),
+                      ),
                       TextButton(
                         // buttonprimaryinactivesmalltcr (9:1332)
                         onPressed: () async {
                           BoutiqueStatic.success = "";
-                          print('produit id ${produit!.first.produitA.id}');
-                          Article articleId=await getArticle(produit.first.produitA.id, selectedTaille.first, selectedColor.first);
-                          static.makeInBagInstance(
-                              articleId.id,
-                              produit.first.produitA.image,
-                              produit.first.produitA.name,
-                              selectedColor,
-                              selectedTaille,
-                              produit.first.produitA.prix);
-                          Navigator.pop(context);
+                          print('qte Stock :  ${produit!.first.qteStk}');
+                          print('produit id ${produit.first.produitA.id}');
+                          int articleId = await getArticle(
+                              produit.first.produitA.id,
+                              selectedTaille.first,
+                              selectedColor.first);
+                          print('yooo ${articleId}');
+                          if (articleId != 0) {
+                            static.makeInBagInstance(
+                                articleId,
+                                produit.first.produitA.image,
+                                produit.first.produitA.name,
+                                selectedColor,
+                                selectedTaille,
+                                produit.first.produitA.prix,
+                                produit.first.qteStk);
+                            Navigator.pop(context);
+                          } else {
+                            show = "out of bounds";
+                            time();
+                          }
                         },
                         style: TextButton.styleFrom(
                           padding: EdgeInsets.zero,
@@ -186,7 +227,7 @@ class _ProductPageState extends State<ProductPage> {
                         child: Center(
                           child: Container(
                             margin: EdgeInsets.only(
-                                left: 10, right: 10, bottom: 15),
+                                left: 10, right: 10, bottom: 25),
                             width: double.infinity,
                             height: 55,
                             decoration: selectedTaille.isNotEmpty &&

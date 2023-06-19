@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:lottie/lottie.dart';
 
 class FavoritePage extends StatefulWidget {
   const FavoritePage({super.key});
@@ -15,7 +16,7 @@ class _FavoritePageState extends State<FavoritePage> {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child:Text('Favorites')
+      child:Lottie.asset('asset/lottie/404error.json',fit: BoxFit.cover),
     );
   }
 }

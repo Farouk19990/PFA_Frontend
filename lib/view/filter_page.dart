@@ -43,7 +43,7 @@ class _FilterPageState extends State<FilterPage> {
     getPrices().then((value) {
       if (prices.isNotEmpty) {
         minString = prices.first.toString();
-        selectedRange = RangeValues(double.parse(minString), prices.first + 50);
+        selectedRange = RangeValues(double.parse(minString), prices.last + 50);
       }
     });
   }
@@ -59,6 +59,8 @@ class _FilterPageState extends State<FilterPage> {
             children: [
               TextButton(
                   onPressed: () {
+                    MyStatic.selectedNAMEsousCategorie.clear();
+                    MyStatic.catOrsubCat = "";
                     Navigator.pop(context);
                   },
                   style: TextButton.styleFrom(
@@ -140,6 +142,7 @@ class _FilterPageState extends State<FilterPage> {
                   widget.imglogo.toString(),
                   width: 40,
                   height: 32,
+                  color:Colors.white
                 ),
               ),
               SizedBox(
@@ -165,16 +168,19 @@ class _FilterPageState extends State<FilterPage> {
       body: FutureBuilder(
           future: articleRepository.getArticles(),
           builder: (context, snapshot) {
-              if(snapshot.data==null){
-              return Container(child: Center(child: CircularProgressIndicator()),);
+            if (snapshot.data == null) {
+              return Container(
+                child: Center(child: CircularProgressIndicator()),
+              );
             }
             List<Article>? articles = snapshot.data;
             if (articles!.isEmpty) {
               return Container(
-                child: Center(child:  Lottie.asset('asset/lottie/no-data.json'),
+                  child: Center(
+                child: Lottie.asset('asset/lottie/no-data.json'),
               ));
             }
-            
+
             var color =
                 articles.map((e) => e.couleur.name).toList().toSet().toList();
             MyStatic static = MyStatic();
@@ -272,16 +278,16 @@ class _FilterPageState extends State<FilterPage> {
                           height: 50,
                           width: 350,
                           child: ListView.builder(
-                            
                               scrollDirection: Axis.horizontal,
                               itemCount: colors.length,
                               itemBuilder: (context, index) {
-                                  String colorName = colors.keys.elementAt(index);
-                                  Color? colorValue = colors[colorName];
+                                String colorName = colors.keys.elementAt(index);
+                                Color? colorValue = colors[colorName];
                                 return GestureDetector(
                                   onTap: () {
                                     setState(() {
-                                      if (selectedColorIndex.contains(colorName)) {
+                                      if (selectedColorIndex
+                                          .contains(colorName)) {
                                         selectedColorIndex.remove(colorName);
                                       } else {
                                         selectedColorIndex.add(colorName);
@@ -296,12 +302,13 @@ class _FilterPageState extends State<FilterPage> {
                                         shape: BoxShape.circle,
                                         color: colorValue,
                                       ),
-                                      child: selectedColorIndex.contains(colorName)
-                                          ? Image.asset(
-                                              'asset/check-mark.png',
-                                              color: Colors.white,
-                                            )
-                                          : null),
+                                      child:
+                                          selectedColorIndex.contains(colorName)
+                                              ? Image.asset(
+                                                  'asset/check-mark.png',
+                                                  color: Colors.white,
+                                                )
+                                              : null),
                                 );
                               })),
                     ),

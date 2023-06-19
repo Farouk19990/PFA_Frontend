@@ -8,8 +8,9 @@ class InBag {
   String? size;
   int? price;
   int qte;
+  int qteMax;
   InBag(this.id, String this.imgUrl, String this.productName, String this.color,
-      String this.size, int this.price, this.qte);
+      String this.size, int this.price, this.qte,this.qteMax);
   void setQte(int qte) {
     this.qte = qte;
   }

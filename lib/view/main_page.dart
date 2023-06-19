@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mall/model/boutique.dart';
 import 'package:mall/model/produits.dart';
 import 'package:mall/view/static/static.dart';
 import '../repository/produit_repo.dart';
@@ -36,6 +37,7 @@ class _MainPageState extends State<MainPage> {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             List<Produit>? sns = snapshot.data;
+
             return Scaffold(
               //backgroundColor: Colors.grey,
               body: CustomScrollView(
@@ -78,21 +80,31 @@ class _MainPageState extends State<MainPage> {
                                         borderRadius:
                                             BorderRadius.circular(20)),
                                     padding: EdgeInsets.all(1),
-                                    child: Image.network(
-                                      widget.imglogo.toString(),
-                                      width: 65,
-                                      height: 45,
-                                    ))
+                                    child: sns!.first.name.toString() !=
+                                            "Pull&Bear"
+                                        ? Image.network(
+                                            widget.imglogo.toString(),
+                                            width: 65,
+                                            height: 45,
+                                            color: Colors.white)
+                                        : Image.network(
+                                            widget.imglogo.toString(),
+                                            width: 65,
+                                            height: 45,))
                               ]),
                         ),
                         preferredSize: Size.fromHeight(0)),
                     expandedHeight: 400,
                     flexibleSpace: FlexibleSpaceBar(
-                      background: Image.network(
-                        'https://assets.vogue.com/photos/6158ba2b2067f42dee55ef8c/master/w_2560%2Cc_limit/ZARA_CG_020921_06_915_03.jpg',
-                        fit: BoxFit.cover,
-                      ),
-                    ),
+                        background: BoutiqueStatic.background.isNotEmpty
+                            ? Image.network(
+                                BoutiqueStatic.background,
+                                fit: BoxFit.fill,
+                              )
+                            : Image.network(
+                                'https://assets.vogue.com/photos/6158ba2b2067f42dee55ef8c/master/w_2560%2Cc_limit/ZARA_CG_020921_06_915_03.jpg',
+                                fit: BoxFit.cover,
+                              )),
                   ),
                   SliverToBoxAdapter(
                     child: GridView.builder(
@@ -103,6 +115,7 @@ class _MainPageState extends State<MainPage> {
                           mainAxisSpacing: 10),
                       shrinkWrap: true,
                       primary: false,
+                      
                       itemBuilder: (context, index) {
                         return Container(
                           //padding: EdgeInsets.all(10),
@@ -223,7 +236,7 @@ class _MainPageState extends State<MainPage> {
                           ),
                         );
                       },
-                      itemCount: sns!.length,
+                      itemCount: sns.length > 6 ?6:sns.length,
                     ),
                   ),
                   /*   SliverList(

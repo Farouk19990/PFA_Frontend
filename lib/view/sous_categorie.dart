@@ -42,6 +42,7 @@ class _SousCategoriePageState extends State<SousCategoriePage> {
                       children: [
                         TextButton(
                             onPressed: () {
+                              MyStatic.selectedNAMEsousCategorie.clear();
                               MyStatic.catOrsubCat="";
                               Navigator.pop(context);
                             },

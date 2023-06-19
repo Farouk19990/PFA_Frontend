@@ -1,11 +1,9 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mall/model/boutique.dart';
-import 'package:mall/view/main_page.dart';
+import 'package:mall/view/static/boutiqueStatic.dart';
 
 import '../repository/boutique_repo.dart';
 import '../view_model/boutique_view_model.dart';
@@ -53,6 +51,7 @@ class _HomeState extends State<Home> {
                           child: Column(children: [
                             GestureDetector(
                               onTap: () {
+                                BoutiqueStatic.background=listOfBoutiques[index].image;
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(

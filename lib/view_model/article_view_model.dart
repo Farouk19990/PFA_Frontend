@@ -50,11 +50,11 @@ class ArticleVM {
     return prices;
   }
 
-  Future<Article> getArticlesIdByCouleurTaille(
+  Future<int> getArticlesIdByCouleurTaille(
       int id, String size, String color) async {
-    Article article =
+    int articleId =
         await articleRepository.getbyProduitbyTaillebyCouleur(id, size, color);
-        print('article ${article.id}');
-    return article;
+    print('article ${articleId}');
+    return articleId;
   }
 }

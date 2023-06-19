@@ -56,6 +56,7 @@ class _CategoriePageState extends State<CategoriePage> {
                             widget.imglogo.toString(),
                             width: 40,
                             height: 32,
+                            color: Colors.white,
                           ),
                         ),
                         SizedBox(

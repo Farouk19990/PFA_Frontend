@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, use_build_context_synchronously
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
@@ -23,6 +25,21 @@ class BagPage extends StatefulWidget {
 
 class _BagPageState extends State<BagPage> {
   var authRepository = AuthVM(authRepository: AuthRepository());
+  String show = "";
+  bool shouldShow = false;
+  int ind=0;
+  time() {
+    if (show == "out of bounds") {
+      setState(() {
+        shouldShow = true;
+      });
+      Timer timer = Timer(Duration(seconds: 3), () {
+        setState(() {
+          shouldShow = false;
+        });
+      });
+    }
+  }
 
   List<InBag> inBag = [];
   int total = 0;
@@ -114,8 +131,7 @@ class _BagPageState extends State<BagPage> {
                               itemCount: inBag.length,
                               itemBuilder: (context, index) {
                                 return Container(
-                                    margin:
-                                        EdgeInsets.only(right: 10, left: 10),
+                                    margin: EdgeInsets.only(left: 10),
                                     child: Card(
                                         shape: RoundedRectangleBorder(
                                           side: BorderSide(
@@ -139,17 +155,20 @@ class _BagPageState extends State<BagPage> {
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
                                                 children: [
-                                                  Text(
-                                                      inBag[index]
-                                                          .productName
-                                                          .toString(),
-                                                      style:
-                                                          GoogleFonts.istokWeb(
-                                                        fontSize: 17,
-                                                        fontWeight:
-                                                            FontWeight.w700,
-                                                        height: 1.15,
-                                                      )),
+                                                  Container(
+                                                    width: 200,
+                                                    child: Text(
+                                                        inBag[index]
+                                                            .productName
+                                                            .toString(),
+                                                        style: GoogleFonts
+                                                            .istokWeb(
+                                                          fontSize: 17,
+                                                          fontWeight:
+                                                              FontWeight.w700,
+                                                          height: 1.15,
+                                                        )),
+                                                  ),
                                                   Container(
                                                     margin: EdgeInsets.only(
                                                         top: 10),
@@ -198,13 +217,25 @@ class _BagPageState extends State<BagPage> {
                                                       GestureDetector(
                                                         onTap: () {
                                                           setState(() {
-                                                            inBag[index].qte++;
-                                                            inBag[index].setQte(
+                                                            if (inBag[index]
+                                                                    .qte <
                                                                 inBag[index]
-                                                                    .qte);
-                                                            total = total +
-                                                                inBag[index]
-                                                                    .price!;
+                                                                    .qteMax) {
+                                                              inBag[index]
+                                                                  .qte++;
+                                                              inBag[index]
+                                                                  .setQte(inBag[
+                                                                          index]
+                                                                      .qte);
+                                                              total = total +
+                                                                  inBag[index]
+                                                                      .price!;
+                                                            } else {
+                                                              ind=index;
+                                                              show =
+                                                                  "out of bounds";
+                                                              time();
+                                                            }
                                                           });
                                                         },
                                                         child: Card(
@@ -290,27 +321,36 @@ class _BagPageState extends State<BagPage> {
                                                       ],
                                                     ),
                                                   ),
+                                                  Container(
+                                                      child: shouldShow && ind==index
+                                                          ? Text(
+                                                              "Sorry,can't add more.",
+                                                              style: GoogleFonts.istokWeb(
+                                                                  fontSize: 18,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w100,
+                                                                  color: Colors
+                                                                      .red))
+                                                          : Container()),
                                                 ],
                                               ),
                                             ),
-                                            Expanded(
-                                              child: Container(
-                                                padding: EdgeInsets.all(10),
-                                                alignment: Alignment.topRight,
-                                                child: GestureDetector(
-                                                  onTap: () {
-                                                    setState(() {
-                                                      inBag
-                                                          .remove(inBag[index]);
-                                                      checkTotal();
-                                                    });
-                                                  },
-                                                  child: Image.asset(
-                                                    'asset/close-1.png',
-                                                    width: 15,
-                                                    height: 15,
-                                                    fit: BoxFit.cover,
-                                                  ),
+                                            Container(
+                                              width: 15,
+                                              alignment: Alignment.topRight,
+                                              child: GestureDetector(
+                                                onTap: () {
+                                                  setState(() {
+                                                    inBag.remove(inBag[index]);
+                                                    checkTotal();
+                                                  });
+                                                },
+                                                child: Image.asset(
+                                                  'asset/close-1.png',
+                                                  width: 15,
+                                                  height: 15,
+                                                  fit: BoxFit.cover,
                                                 ),
                                               ),
                                             ),

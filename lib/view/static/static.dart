@@ -14,7 +14,7 @@ class MyStatic {
   static List<ShippingInfo> shippingInfo = [];
   static int total = 0;
 
-  static String goingToTheShipping="";
+  static String goingToTheShipping = "";
 
   static String userEmail = "";
   static int userID = 0;
@@ -27,17 +27,29 @@ class MyStatic {
         case "noir":
           colorMap['noir'] = Colors.black;
           break;
+        case "marron":
+          colorMap['marron'] = Colors.brown;
+          break;
+        case "blanc":
+          colorMap['blanc'] = Colors.white;
+          break;
+        case "bleu":
+          colorMap['bleu'] = Colors.blue;
+          break;
+        case "jeune":
+          colorMap['jeune'] = Colors.yellow;
+          break;
+        case "vert":
+          colorMap['vert'] = Colors.green;
+          break;
         case "Beige":
-          colorMap['Beige'] = Colors.brown;
+          colorMap['Beige'] = Colors.brown.shade100;
           break;
-        case "red":
-          colorMap['red'] = Colors.red;
+        case "rose":
+          colorMap['rose'] = Colors.pink;
           break;
-        case "blue":
-          colorMap['blue'] = Colors.blue;
-          break;
-        case "green":
-          colorMap['green'] = Colors.green;
+        case "rouge":
+          colorMap['rouge'] = Colors.red;
           break;
         // Add more cases for additional key-value pairs as needed
         default:
@@ -51,16 +63,16 @@ class MyStatic {
   static List<InBag> inBagList = [];
   static List<InBag> favoriteList = [];
   void makeInBagInstance(int id, String imgUrl, String productName,
-      List<String> colors, List<String> sizes, int price) {
+      List<String> colors, List<String> sizes, int price, int qteMax) {
     for (InBag i in inBagList) {
       print("here");
       if (id == i.id && sizes.first == i.size && colors.first == i.color) {
-        i.setQte(i.qte+1);
+        i.setQte(i.qte + 1);
         return;
       }
     }
-    InBag inBag =
-        InBag(id, imgUrl, productName, colors.first, sizes.first, price, 1);
+    InBag inBag = InBag(
+        id, imgUrl, productName, colors.first, sizes.first, price, 1, qteMax);
     inBagList.add(inBag);
   }
 }

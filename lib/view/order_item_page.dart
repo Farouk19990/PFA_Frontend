@@ -93,17 +93,20 @@ class _OrderItemPageState extends State<OrderItemPage> {
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
                                             children: [
-                                              Text(
-                                                  lignecommand[index]
-                                                      .article
-                                                      .produitA
-                                                      .name
-                                                      .toString(),
-                                                  style: GoogleFonts.istokWeb(
-                                                    fontSize: 17,
-                                                    fontWeight: FontWeight.w700,
-                                                    height: 1.15,
-                                                  )),
+                                              Container(
+                                                width: 190,
+                                                child: Text(
+                                                    lignecommand[index]
+                                                        .article
+                                                        .produitA
+                                                        .name
+                                                        .toString(),
+                                                    style: GoogleFonts.istokWeb(
+                                                      fontSize: 17,
+                                                      fontWeight: FontWeight.w700,
+                                                      height: 1.15,
+                                                    )),
+                                              ),
                                               Container(
                                                 margin:
                                                     EdgeInsets.only(top: 10),
