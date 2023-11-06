@@ -94,7 +94,7 @@ class _OrderItemPageState extends State<OrderItemPage> {
                                                 CrossAxisAlignment.start,
                                             children: [
                                               Container(
-                                                width: 190,
+                                                width: 180,
                                                 child: Text(
                                                     lignecommand[index]
                                                         .article

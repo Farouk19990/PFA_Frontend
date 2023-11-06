@@ -103,7 +103,7 @@ class AboutUs3 extends StatelessWidget {
                   maxWidth: 334,
                 ),
                 child: Text(
-                  'Mall of Tunisia also guarantees you\nthe fastest delivery. You can return\nor exchange the product with respect\nto the period of 2 day’s.',
+                  'Mall of Tunisia also guarantees you\nthe fastest delivery. ',
                   textAlign: TextAlign.center,
                   style: GoogleFonts.josefinSans(
                     fontSize: 20,

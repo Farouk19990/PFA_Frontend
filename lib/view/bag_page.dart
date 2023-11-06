@@ -150,13 +150,13 @@ class _BagPageState extends State<BagPage> {
                                             ),
                                             Container(
                                               margin: EdgeInsets.only(
-                                                  top: 10, left: 5),
+                                                  top: 10, left: 2),
                                               child: Column(
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
                                                 children: [
                                                   Container(
-                                                    width: 200,
+                                                    width: 190,
                                                     child: Text(
                                                         inBag[index]
                                                             .productName

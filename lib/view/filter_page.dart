@@ -196,7 +196,7 @@ class _FilterPageState extends State<FilterPage> {
                       style: GoogleFonts.caladea(
                           fontSize: 20, fontWeight: FontWeight.bold)),
                   Container(
-                    width: double.infinity,
+                    //width: double.minPositive,
                     child: Row(
                       children: [
                         Card(
@@ -205,7 +205,7 @@ class _FilterPageState extends State<FilterPage> {
                             padding: EdgeInsets.all(5),
                             child: SizedBox(
                               height: 50,
-                              width: 350,
+                              width: 340,
                               child: Column(
                                 children: [
                                   Container(

@@ -204,10 +204,10 @@ class _ShippingPageState extends State<ShippingPage> {
                   ),
                   Text(
                     'State/Region :',
-                    style: GoogleFonts.istokWeb(fontSize: 21,fontWeight: FontWeight.w500),
+                    style: GoogleFonts.istokWeb(fontSize: 19,fontWeight: FontWeight.w500),
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(0),
                     child: DropdownButton(
                         borderRadius: BorderRadius.circular(5),
                         value: selectedState,
